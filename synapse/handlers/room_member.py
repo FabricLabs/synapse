@@ -341,9 +341,12 @@ class RoomMemberHandler(object):
         prev_events_and_hashes = yield self.store.get_prev_events_for_room(
             room_id,
         )
-        latest_event_ids = (
+        latest_event_ids = [
             event_id for (event_id, _, _) in prev_events_and_hashes
-        )
+        ]
+
+        logger.info("latest_event_ids: %s", latest_event_ids)
+
         current_state_ids = yield self.state_handler.get_current_state_ids(
             room_id, latest_event_ids=latest_event_ids,
         )
